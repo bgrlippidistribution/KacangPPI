@@ -1,0 +1,482 @@
+/* ============================================================ */
+/* RESPONSIVE STYLES
+/* ============================================================ */
+
+/* Tablet & Small Desktop */
+@media (max-width: 1280px) {
+    body {
+        min-width: 1080px;
+    }
+
+    .topbar {
+        grid-template-columns: minmax(300px, 1fr) auto auto 190px;
+    }
+
+    .topbar .status-filter {
+        display: none;
+    }
+
+    .summary-wrap {
+        grid-template-columns: 1.55fr .75fr .9fr;
+    }
+
+    .workspace {
+        grid-template-columns: 94px 1fr 270px;
+    }
+
+    .brand h1 {
+        font-size: 19px;
+    }
+
+    .metric-head {
+        font-size: 8px;
+    }
+
+    .metric .value {
+        font-size: 25px;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1.3fr 0.7fr 0.9fr;
+    }
+}
+
+/* Mobile & Tablet Portrait */
+@media (max-width: 768px) {
+    body {
+        min-width: unset;
+        font-size: 11px;
+    }
+
+    .topbar {
+        height: auto;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 10px 12px;
+    }
+
+    .brand h1 {
+        font-size: 16px;
+    }
+
+    .brand .sub {
+        font-size: 10px;
+    }
+
+    .top-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .top-control {
+        height: 32px;
+        padding: 0 8px;
+        font-size: 10px;
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .top-control select,
+    .top-control input {
+        min-width: 60px;
+    }
+
+    .last-update {
+        height: auto;
+        padding: 6px 10px;
+        grid-template-columns: 1fr 30px;
+    }
+
+    .summary-wrap {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 4px 8px 0;
+    }
+
+    .summary-left {
+        border-radius: 8px;
+    }
+
+    .summary-mid {
+        border-left: 1px solid #d7dde6;
+        border-radius: 8px;
+    }
+
+    .summary-right {
+        border-left: 1px solid #d7dde6;
+        border-radius: 8px;
+    }
+
+    .metric-row {
+        height: auto;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+    }
+
+    .metric {
+        padding-top: 6px;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .metric .value {
+        font-size: 20px;
+        margin-top: 8px;
+    }
+
+    .metric .pct {
+        font-size: 10px;
+        margin-top: 4px;
+    }
+
+    .donut-area {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .donut {
+        width: 120px;
+        height: 120px;
+    }
+
+    .donut:after {
+        inset: 28px;
+    }
+
+    .donut-center strong {
+        font-size: 22px;
+    }
+
+    .workspace {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .rail {
+        display: none;
+    }
+
+    .main-stack {
+        gap: 8px;
+    }
+
+    .alerts {
+        min-height: 200px;
+    }
+
+    .alerts .table-wrap {
+        height: 150px;
+    }
+
+    .alerts.expanded .table-wrap {
+        max-height: 400px;
+    }
+
+    .data-table {
+        font-size: 7px;
+    }
+
+    .data-table th {
+        font-size: 6.5px;
+        padding: 2px 3px;
+        height: 30px;
+    }
+
+    .data-table td {
+        padding: 3px 4px;
+        height: 26px;
+        font-size: 6.5px;
+    }
+
+    .pct-big {
+        font-size: 10px;
+    }
+
+    .tag {
+        font-size: 6px;
+        padding: 2px 5px;
+    }
+
+    .filters {
+        height: auto;
+    }
+
+    .filter-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        min-height: auto;
+    }
+
+    .detail-h {
+        font-size: 10px;
+        height: 26px;
+        padding: 0 8px;
+    }
+
+    .detail-stats {
+        grid-template-columns: repeat(3, 1fr);
+        margin: 4px 6px;
+    }
+
+    .detail-stat strong {
+        font-size: 12px;
+    }
+
+    .checkpoint-table {
+        font-size: 6.5px;
+    }
+
+    .checkpoint-table th {
+        font-size: 5.5px;
+        height: 18px;
+        padding: 1px 3px;
+    }
+
+    .checkpoint-table td {
+        height: 16px;
+        padding: 1px 3px;
+    }
+
+    .journey {
+        height: auto;
+        padding: 8px;
+        overflow-x: auto;
+    }
+
+    .journey-line {
+        grid-template-columns: repeat(12, 80px);
+        margin-top: 10px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+
+    .journey-line:before {
+        display: none;
+    }
+
+    .stage {
+        min-width: 70px;
+        padding: 0 4px;
+    }
+
+    .stage .circle {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+    }
+
+    .stage-name {
+        font-size: 6.5px;
+        min-height: 20px;
+    }
+
+    .stage-pct {
+        font-size: 9px;
+    }
+
+    .stage-note {
+        font-size: 6px;
+        min-height: 14px;
+    }
+
+    .journey-foot {
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 6.5px;
+        padding-top: 6px;
+    }
+
+    .selected-bar {
+        height: auto;
+        min-height: 34px;
+        grid-template-columns: 1fr;
+        gap: 4px;
+        padding: 6px 8px;
+    }
+
+    .selected-label {
+        justify-content: center;
+    }
+
+    .legend-footer {
+        padding: 6px 10px;
+        gap: 4px 10px;
+    }
+
+    .legend-footer>strong {
+        font-size: 7px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .legend-f-item {
+        font-size: 6.5px;
+    }
+
+    .footnote {
+        font-size: 6px;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .stage-detail-content {
+        padding: 20px;
+        max-width: 95%;
+    }
+
+    .stage-detail-content .detail-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+        font-size: 11px;
+    }
+
+    .stage-detail-content h2 {
+        font-size: 16px;
+    }
+
+    /* Scroll horizontal untuk tablet */
+    .table-wrap {
+        overflow-x: auto;
+    }
+
+    .data-table {
+        min-width: 800px;
+    }
+
+    .journey-line {
+        min-width: 960px;
+    }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+    .topbar {
+        padding: 8px;
+    }
+
+    .brand h1 {
+        font-size: 14px;
+    }
+
+    .top-control {
+        font-size: 9px;
+        height: 28px;
+        min-width: 80px;
+    }
+
+    .top-control select,
+    .top-control input {
+        font-size: 9px;
+        min-width: 40px;
+    }
+
+    .metric-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .metric .value {
+        font-size: 18px;
+    }
+
+    .overall-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .overall-card {
+        border-right: 0;
+        border-bottom: 1px solid #ddd;
+        padding: 8px 0;
+        min-height: auto;
+    }
+
+    .overall-card:last-child {
+        border-bottom: 0;
+    }
+
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detail-stat {
+        border-right: 1px solid #e1e5eb;
+    }
+
+    .detail-stat:nth-child(even) {
+        border-right: 0;
+    }
+
+    .stage-detail-content {
+        padding: 16px;
+    }
+
+    .stage-detail-content .detail-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+        font-size: 10px;
+        padding: 4px 0;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .topbar,
+    .rail,
+    .filters,
+    .view-all,
+    .refresh,
+    .last-update,
+    .top-controls {
+        display: none !important;
+    }
+
+    .workspace {
+        grid-template-columns: 1fr !important;
+    }
+
+    .summary-wrap {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .page {
+        background: white !important;
+    }
+
+    .panel,
+    .box,
+    .detail-panel {
+        border-color: #ccc !important;
+        box-shadow: none !important;
+    }
+
+    .alerts .table-wrap {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .data-table th {
+        background: #f0f0f0 !important;
+    }
+}
+
+/* Dark Mode (Opsional) */
+@media (prefers-color-scheme: dark) {
+    /* Tambahkan jika diperlukan */
+}

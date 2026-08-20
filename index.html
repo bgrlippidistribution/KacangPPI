@@ -710,7 +710,7 @@
 <div class="page">
   <header class="topbar">
     <div class="brand"><h1>SLA ALERT &amp; EXCEPTION CONTROL TOWER</h1><div class="sub">IMPOR KACANG BLI 2026</div></div>
-    <div class="top-control"><label>Periode</label><input id="period" value="14 – 16 Mei 2026" /></div>
+    <div class="top-control"><label>Periode</label><input id="period" value="Memuat..." /></div>
     <div class="top-control"><label>Wilayah</label><select id="region"><option value="">Semua</option></select></div>
     <div class="top-control status-filter"><label>Status Overall SLA</label><select id="overallFilter"><option value="">Semua</option><option>ON TRACK</option><option>AT RISK</option><option>LEWAT SLA</option></select></div>
     <div class="last-update"><div><small>Terakhir Update</small><b id="lastUpdate">-</b></div><div class="refresh" id="refreshBtn">↻</div></div>
@@ -1241,6 +1241,57 @@ function getStatusBadgeClass(status) {
 }
 
 // ============================================================
+// FUNGSI MENGHITUNG PERIODE DARI DATA UPDATE
+// ============================================================
+function calculatePeriodFromUpdates(alerts) {
+    if (!alerts || alerts.length === 0) {
+        return '14 – 16 Mei 2026';
+    }
+    
+    // Ambil semua tanggal dari field 'update'
+    const dates = alerts
+        .map(a => a.update || a.start || '')
+        .filter(d => d && d !== '-' && d !== '')
+        .map(d => {
+            // Format: "16 Mei 15:25" atau "16 Mei 09:12"
+            const parts = d.match(/(\d+)\s+(\w+)\s+(\d{2}:\d{2})/);
+            if (parts) {
+                const day = parseInt(parts[1]);
+                const month = parts[2];
+                const time = parts[3];
+                return { day, month, time, full: d };
+            }
+            return null;
+        })
+        .filter(d => d !== null);
+    
+    if (dates.length === 0) {
+        return '14 – 16 Mei 2026';
+    }
+    
+    // Urutkan berdasarkan tanggal
+    const months = {'Jan':1,'Feb':2,'Mar':3,'Apr':4,'Mei':5,'Jun':6,'Jul':7,'Agu':8,'Sep':9,'Okt':10,'Nov':11,'Des':12};
+    dates.sort((a, b) => {
+        if (months[a.month] !== months[b.month]) return months[a.month] - months[b.month];
+        return a.day - b.day;
+    });
+    
+    const min = dates[0];
+    const max = dates[dates.length - 1];
+    
+    // Format periode
+    let periodText = '';
+    if (min.month === max.month) {
+        periodText = `${min.day} – ${max.day} ${min.month} 2026`;
+    } else {
+        periodText = `${min.day} ${min.month} – ${max.day} ${max.month} 2026`;
+    }
+    
+    console.log('📅 Periode terhitung:', periodText);
+    return periodText;
+}
+
+// ============================================================
 // FUNGSI FETCH DATA DARI SPREADSHEET
 // ============================================================
 async function fetchDataFromSpreadsheet() {
@@ -1289,13 +1340,18 @@ function toggleAlertView() {
 // FUNGSI RENDER
 // ============================================================
 function renderAll() {
-  renderMetrics();
-  renderOverall();
-  populateFilters();
-  renderAlerts();
-  const first = (filteredAlerts()[0] || DATA.alerts[0]);
-  if (first) selectShipment(first.idOrder);
-  $('#lastUpdate').textContent = DATA.lastUpdate || '-';
+    renderMetrics();
+    renderOverall();
+    populateFilters();
+    renderAlerts();
+    
+    // 🔥 UPDATE PERIODE OTOMATIS DARI DATA UPDATE
+    const period = calculatePeriodFromUpdates(DATA.alerts);
+    document.getElementById('period').value = period;
+    
+    const first = (filteredAlerts()[0] || DATA.alerts[0]);
+    if (first) selectShipment(first.idOrder);
+    $('#lastUpdate').textContent = DATA.lastUpdate || '-';
 }
 
 function renderMetrics() {

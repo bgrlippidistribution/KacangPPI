@@ -50,7 +50,188 @@
   .rail{background:var(--navy2);color:white;border:1px solid rgba(255,255,255,.45);border-radius:8px;min-height:684px;padding:14px 8px;display:flex;flex-direction:column;align-items:center}.rail-title{font-weight:800;text-align:center;font-size:10px;line-height:1.3;margin-bottom:15px}.rail-step{text-align:center;position:relative;width:100%;height:198px}.rail-step:not(:last-child):after{content:"";position:absolute;width:1px;border-left:1px dashed #d7dfeb;left:50%;top:75px;height:72px}.step-num{width:38px;height:38px;border-radius:50%;border:3px solid white;display:grid;place-items:center;margin:0 auto 10px;font-weight:800;font-size:18px}.step1{background:#184792}.step2{background:#18815d}.step3{background:#ed7a0b}.rail-step p{font-size:9px;line-height:1.4;margin:0 2px 9px;font-weight:700}.rail-icon{font-size:29px;line-height:1}
 
   .main-stack{display:flex;flex-direction:column;gap:8px}.box{background:white;border:1px solid #d5dbe5;border-radius:8px;box-shadow:var(--shadow);overflow:hidden}.box-title{height:28px;background:var(--navy);color:white;display:flex;align-items:center;padding:0 12px;font-weight:800;font-size:11px}.box-title .muted{font-weight:500;font-size:9px;margin-left:5px}.box-title .grow{flex:1}.box-title .count{font-size:9px}
-  .alerts{height:259px}.table-wrap{overflow:auto;height:200px}.data-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:8.5px}.data-table th{height:38px;border-bottom:1px solid #dce1e8;text-align:center;font-size:7.7px;line-height:1.15;padding:3px;background:#fff}.data-table td{height:31px;border-bottom:1px solid #dfe4ea;padding:4px 5px;text-align:center;line-height:1.2}.data-table tbody tr{cursor:pointer}.data-table tbody tr:hover{background:#f6f9fd}.data-table tbody tr.selected{background:#fff7f7;box-shadow:inset 3px 0 0 var(--red)}.prio{font-weight:800;text-align:left!important}.prio .pill-icon{width:16px;height:16px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;margin-right:4px;font-size:10px}.pct-big{font-size:12px;font-weight:800}.tag{display:inline-block;padding:3px 7px;border-radius:5px;color:white;font-size:7.5px;font-weight:800;white-space:nowrap}.tag-red{background:var(--red)}.tag-orange{background:var(--orange)}.tag-green{background:var(--green)}.tag-gray{background:#8f97a4}.view-all{height:30px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;border-top:1px solid #e4e7ed}
+  
+  /* ============================================================ */
+  /* ALERT TABLE - HEADER STICKY & EXPAND/COLLAPSE */
+  /* ============================================================ */
+  .alerts {
+    height: 259px;
+    transition: height 0.4s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: white;
+  }
+
+  .alerts.expanded {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .alerts .box-title {
+    flex-shrink: 0;
+  }
+
+  .alerts .table-wrap {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    min-height: 0;
+  }
+
+  .alerts.expanded .table-wrap {
+    max-height: 600px;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 8.5px;
+  }
+
+  .data-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .data-table th {
+    height: 38px;
+    border-bottom: 2px solid #dce1e8;
+    text-align: center;
+    font-size: 7.7px;
+    line-height: 1.15;
+    padding: 3px 4px;
+    background: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 2px -1px rgba(0,0,0,0.06);
+    font-weight: 700;
+    color: #1a3a5a;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .data-table td {
+    height: 31px;
+    border-bottom: 1px solid #dfe4ea;
+    padding: 4px 5px;
+    text-align: center;
+    line-height: 1.2;
+    background: #ffffff;
+    vertical-align: middle;
+  }
+
+  .data-table tbody tr {
+    cursor: pointer;
+  }
+
+  .data-table tbody tr:hover {
+    background: #f6f9fd;
+  }
+
+  .data-table tbody tr:hover td {
+    background: #f6f9fd;
+  }
+
+  .data-table tbody tr.selected {
+    background: #fff7f7;
+    box-shadow: inset 3px 0 0 var(--red);
+  }
+
+  .data-table tbody tr.selected td {
+    background: #fff7f7;
+  }
+
+  .data-table tbody tr.hidden-row {
+    display: none;
+  }
+
+  .alerts.expanded .data-table tbody tr.hidden-row {
+    display: table-row;
+  }
+
+  .prio {
+    font-weight: 800;
+    text-align: left !important;
+  }
+
+  .prio .pill-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    color: #fff;
+    margin-right: 4px;
+    font-size: 10px;
+  }
+
+  .pct-big {
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 3px 7px;
+    border-radius: 5px;
+    color: white;
+    font-size: 7.5px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .tag-red {
+    background: var(--red);
+  }
+
+  .tag-orange {
+    background: var(--orange);
+  }
+
+  .tag-green {
+    background: var(--green);
+  }
+
+  .tag-gray {
+    background: #8f97a4;
+  }
+
+  .view-all {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 800;
+    border-top: 1px solid #e4e7ed;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+    flex-shrink: 0;
+    background: #ffffff;
+  }
+
+  .view-all:hover {
+    background: #f0f4fa;
+  }
+
+  .view-all .arrow-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    margin-left: 6px;
+  }
+
+  .view-all .arrow-icon.down {
+    transform: rotate(0deg);
+  }
+
+  .view-all .arrow-icon.up {
+    transform: rotate(180deg);
+  }
 
   .filters{height:259px}.filter-body{padding:10px 11px}.filter-body label{display:block;font-size:9px;font-weight:800;margin:0 0 4px}.filter-body input,.filter-body select{width:100%;height:31px;border:1px solid #d8dde5;border-radius:5px;padding:0 9px;background:#fff;font-size:9px}.filter-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px;margin-top:11px}.filter-apply{margin-top:11px;width:100%;height:31px;border:0;border-radius:5px;background:#0d4b95;color:white;font-weight:800;cursor:pointer}
 
@@ -59,7 +240,7 @@
   .journey{height:196px;padding:10px 12px 5px}.journey-head{display:flex;align-items:center}.journey-title{font-size:11px;font-weight:800;flex:1}.journey-legend{display:flex;gap:18px;font-size:8px;align-items:center}.journey-line{position:relative;display:grid;grid-template-columns:repeat(12,1fr);gap:0;margin-top:16px}.journey-line:before{content:"";position:absolute;left:3.5%;right:3.5%;top:17px;height:3px;background:#c6ced8;z-index:0}.stage{position:relative;text-align:center;padding:0 3px;z-index:1;min-width:0;cursor:pointer;transition:all 0.2s}.stage:hover{transform:scale(1.05);filter:brightness(1.1)}.stage.active{border:2px solid #1a6a9a;border-radius:6px;padding:3px 2px 5px;margin-top:-5px;background:#f0f8ff}.stage .circle{width:31px;height:31px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1px #aeb7c4;display:grid;place-items:center;margin:0 auto 5px;color:white;font-weight:800;font-size:14px;background:#8a92a1;transition:all 0.2s}.stage.active .circle{box-shadow:0 0 0 3px #1a6a9a}.stage.current{border:2px solid #e3262e;border-radius:6px;padding:3px 2px 5px;margin-top:-5px;background:white}.stage.current .circle{margin-top:0}.stage-name{font-weight:800;font-size:7.5px;line-height:1.16;min-height:26px}.stage-sla{font-size:7px;min-height:10px}.stage-pct{font-size:11px;font-weight:800;margin-top:4px}.stage-note{font-size:7px;line-height:1.2;margin-top:3px;min-height:17px}.stage.completed .circle,.stage.ontrack .circle{background:var(--green)}.stage.atrisk .circle{background:var(--orange)}.stage.warning .circle{background:var(--amber)}.stage.breach .circle,.stage.critical .circle{background:var(--red)}.stage.notstarted .circle{background:#8d96a7}.checkmark{font-size:11px;margin-top:4px;color:var(--green);font-weight:900}.journey-foot{display:flex;justify-content:center;gap:26px;border-top:1px solid #e1e5eb;margin-top:8px;padding-top:4px;font-size:7.5px;font-weight:700}
 
   /* ============================================================ */
-  /* PERBAIKAN BAGIAN LEVEL 3 - DETAIL TAHAPAN & CHECKPOINT */
+  /* LEVEL 3 - DETAIL TAHAPAN & CHECKPOINT */
   /* ============================================================ */
   .detail-grid {
     display: grid;
@@ -309,7 +490,7 @@
   }
 
   /* ============================================================ */
-  /* PERBAIKAN LEGEND FOOTER */
+  /* LEGEND FOOTER */
   /* ============================================================ */
   .legend-footer {
     margin: 8px 13px 10px;
@@ -560,12 +741,36 @@
     </aside>
 
     <main class="main-stack">
-      <div class="box alerts">
+      <!-- ========================================================== -->
+      <!-- LEVEL 1 – DAFTAR ALERT AKTIF (DENGAN EXPAND/COLLAPSE)      -->
+      <!-- ========================================================== -->
+      <div class="box alerts" id="alertContainer">
         <div class="box-title">LEVEL 1 – DAFTAR ALERT AKTIF <span class="muted">(Prioritas Tertinggi di Atas)</span><span class="grow"></span><span class="count">TOTAL ALERT : &nbsp;<b id="totalAlert">0</b></span></div>
-        <div class="table-wrap"><table class="data-table"><thead><tr>
-          <th style="width:10%">PRIORITAS</th><th style="width:10%">B/L NO.</th><th style="width:10%">CONTAINER</th><th style="width:12%">TAHAPAN<br/>(SLA TAHAPAN)</th><th style="width:7%">SLA USED</th><th style="width:8%">REMAINING /<br/>OVERDUE</th><th style="width:14%">CURRENT CHECKPOINT<br/>(STUCK AT)</th><th style="width:8%">PIC</th><th style="width:9%">CONTROLLER</th><th style="width:8%">ESCALATION<br/>STATUS</th><th style="width:8%">OVERALL SLA<br/>(7 HARI)</th><th style="width:7%">UPDATE</th>
-        </tr></thead><tbody id="alertRows"></tbody></table></div>
-        <div class="view-all">Lihat Semua Alert (<span id="viewAllCount">0</span>) &nbsp; ➜</div>
+        <div class="table-wrap" id="tableWrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:10%">PRIORITAS</th>
+                <th style="width:10%">B/L NO.</th>
+                <th style="width:10%">CONTAINER</th>
+                <th style="width:12%">TAHAPAN<br/>(SLA TAHAPAN)</th>
+                <th style="width:7%">SLA USED</th>
+                <th style="width:8%">REMAINING /<br/>OVERDUE</th>
+                <th style="width:14%">CURRENT CHECKPOINT<br/>(STUCK AT)</th>
+                <th style="width:8%">PIC</th>
+                <th style="width:9%">CONTROLLER</th>
+                <th style="width:8%">ESCALATION<br/>STATUS</th>
+                <th style="width:8%">OVERALL SLA<br/>(7 HARI)</th>
+                <th style="width:7%">UPDATE</th>
+              </tr>
+            </thead>
+            <tbody id="alertRows"></tbody>
+          </table>
+        </div>
+        <div class="view-all" id="viewAllBtn">
+          Lihat Semua Alert (<span id="viewAllCount">0</span>) 
+          <span class="arrow-icon down" id="arrowIcon">▼</span>
+        </div>
       </div>
 
       <div class="selected-bar" id="selectedBar"></div>
@@ -577,7 +782,7 @@
       </div>
 
       <!-- ========================================================== -->
-      <!-- LEVEL 3 – DETAIL TAHAPAN & CHECKPOINT (Sudah Diperbaiki)   -->
+      <!-- LEVEL 3 – DETAIL TAHAPAN & CHECKPOINT                      -->
       <!-- ========================================================== -->
       <div class="detail-grid">
         <!-- KOLOM KIRI: DETAIL TAHAPAN & CHECKPOINT -->
@@ -629,12 +834,22 @@
 
     <aside class="box filters">
       <div class="box-title">▽ &nbsp; FILTER CEPAT</div>
-      <div class="filter-body"><label>Cari B/L / Container</label><input id="search" placeholder="Masukkan B/L atau Container" /><div class="filter-grid"><div><label>Pilih Tahapan</label><select id="stageFilter"><option value="">Semua Tahapan</option></select></div><div><label>Prioritas Alert</label><select id="priorityFilter"><option value="">Semua Prioritas</option><option>CRITICAL EVENT</option><option>SLA BREACH</option><option>AT RISK</option><option>WARNING</option><option>ON TRACK</option></select></div><div><label>Wilayah</label><select id="region2"><option value="">Semua Wilayah</option></select></div><div><label>Escalation Status</label><select id="escalationFilter"><option value="">Semua Status</option><option>OPEN</option><option>NONE</option><option>CLOSED</option></select></div></div><button class="filter-apply" id="applyFilter">Terapkan Filter</button></div>
+      <div class="filter-body">
+        <label>Cari B/L / Container</label>
+        <input id="search" placeholder="Masukkan B/L atau Container" />
+        <div class="filter-grid">
+          <div><label>Pilih Tahapan</label><select id="stageFilter"><option value="">Semua Tahapan</option></select></div>
+          <div><label>Prioritas Alert</label><select id="priorityFilter"><option value="">Semua Prioritas</option><option>CRITICAL EVENT</option><option>SLA BREACH</option><option>AT RISK</option><option>WARNING</option><option>ON TRACK</option></select></div>
+          <div><label>Wilayah</label><select id="region2"><option value="">Semua Wilayah</option></select></div>
+          <div><label>Escalation Status</label><select id="escalationFilter"><option value="">Semua Status</option><option>OPEN</option><option>NONE</option><option>CLOSED</option></select></div>
+        </div>
+        <button class="filter-apply" id="applyFilter">Terapkan Filter</button>
+      </div>
     </aside>
   </section>
 
   <!-- ========================================================== -->
-  <!-- FOOTER / LEGEND (Sudah Diperbaiki)                         -->
+  <!-- FOOTER / LEGEND                                            -->
   <!-- ========================================================== -->
   <footer class="legend-footer">
     <strong>KETERANGAN PRIORITAS</strong>
@@ -962,6 +1177,8 @@ const DEMO_DATA = {
 let DATA = DEMO_DATA;
 let selectedId = null;
 let selectedStageIndex = -1;
+let isExpanded = false;
+const MAX_VISIBLE_ROWS = 5;
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
@@ -1029,31 +1246,43 @@ function getStatusBadgeClass(status) {
 async function fetchDataFromSpreadsheet() {
   try {
     const url = WEBAPP_URL;
-    
     console.log('📡 Mengambil data dari:', url);
-    
     const response = await fetch(url);
-    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
     const data = await response.json();
-    
     if (data.error) {
       console.error('❌ API Error:', data.error);
       console.log('📌 Menggunakan data dummy sebagai fallback');
       return DEMO_DATA;
     }
-    
     console.log('✅ Data berhasil diambil:', data);
     return data;
-    
   } catch (error) {
     console.error('❌ Error fetching spreadsheet data:', error);
     console.log('📌 Menggunakan data dummy sebagai fallback');
     return DEMO_DATA;
   }
+}
+
+// ============================================================
+// FUNGSI EXPAND/COLLAPSE ALERT
+// ============================================================
+function toggleAlertView() {
+  isExpanded = !isExpanded;
+  const container = document.getElementById('alertContainer');
+  const viewAllBtn = document.getElementById('viewAllBtn');
+  const total = filteredAlerts().length;
+  
+  if (isExpanded) {
+    container.classList.add('expanded');
+    viewAllBtn.innerHTML = `Sembunyikan Alert (<span id="viewAllCount">${total}</span>) <span class="arrow-icon up" id="arrowIcon">▼</span>`;
+  } else {
+    container.classList.remove('expanded');
+    viewAllBtn.innerHTML = `Lihat Semua Alert (<span id="viewAllCount">${total}</span>) <span class="arrow-icon down" id="arrowIcon">▼</span>`;
+  }
+  renderAlerts();
 }
 
 // ============================================================
@@ -1166,10 +1395,13 @@ function filteredAlerts() {
 
 function renderAlerts() {
   const rows = filteredAlerts();
-  $('#totalAlert').textContent = rows.length;
-  $('#viewAllCount').textContent = rows.length;
+  const total = rows.length;
+  $('#totalAlert').textContent = total;
+  $('#viewAllCount').textContent = total;
 
-  $('#alertRows').innerHTML = rows.map(a => {
+  const visibleRows = isExpanded ? total : Math.min(total, MAX_VISIBLE_ROWS);
+  
+  $('#alertRows').innerHTML = rows.map((a, index) => {
     const st = STATUS[a.priority] || STATUS['ON TRACK'];
     const remain = a.remainingHours < 0 ? `+${fmtHours(Math.abs(a.remainingHours))}` : fmtHours(a.remainingHours);
     const remainColor = a.remainingHours < 0 ? '#d30d14' : (a.slaUsedPct >= .85 ? '#e26e05' : '#0a7f63');
@@ -1177,8 +1409,10 @@ function renderAlerts() {
       .replace('CRITICAL EVENT', 'Critical Event')
       .replace('SLA BREACH', 'SLA Breach')
       .replace('AT RISK', 'At Risk');
+    
+    const hiddenClass = (!isExpanded && index >= visibleRows) ? 'hidden-row' : '';
 
-    return `<tr data-id="${a.idOrder}" class="${a.idOrder === selectedId ? 'selected' : ''}">
+    return `<tr data-id="${a.idOrder}" class="${a.idOrder === selectedId ? 'selected' : ''} ${hiddenClass}">
       <td class="prio" style="color:${st.color}">
         <span class="pill-icon" style="background:${st.color}">${st.icon}</span>
         ${priorityLabel}
@@ -1198,6 +1432,14 @@ function renderAlerts() {
       <td>${a.update || '-'}</td>
     </tr>`;
   }).join('');
+
+  // Update view all button
+  const viewAllBtn = document.getElementById('viewAllBtn');
+  if (isExpanded) {
+    viewAllBtn.innerHTML = `Sembunyikan Alert (<span id="viewAllCount">${total}</span>) <span class="arrow-icon up" id="arrowIcon">▼</span>`;
+  } else {
+    viewAllBtn.innerHTML = `Lihat Semua Alert (<span id="viewAllCount">${total}</span>) <span class="arrow-icon down" id="arrowIcon">▼</span>`;
+  }
 
   $$('#alertRows tr').forEach(tr => {
     tr.onclick = () => selectShipment(tr.dataset.id);
@@ -1480,6 +1722,7 @@ async function loadData() {
 $('#applyFilter').onclick = () => renderAlerts();
 $('#search').addEventListener('input', renderAlerts);
 $('#refreshBtn').onclick = loadData;
+$('#viewAllBtn').onclick = toggleAlertView;
 $('#region').onchange = () => {
   $('#region2').value = $('#region').value;
   renderAlerts();

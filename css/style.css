@@ -1258,7 +1258,7 @@ select:focus-visible,
 .action-card ul {
     margin: 0;
     padding-left: 16px;
-    font-size: 8.5px;
+    font-size: 11px;
     line-height: 1.75;
     list-style-type: disc;
     flex: 1;
@@ -1270,7 +1270,7 @@ select:focus-visible,
 
 .mini-title {
     font-weight: 800;
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 6px;
     color: #1a3a5a;
     flex-shrink: 0;
@@ -1281,7 +1281,7 @@ select:focus-visible,
     flex-direction: column;
     gap: 3px;
     font-weight: 700;
-    font-size: 9px;
+    font-size: 11px;
     flex: 1;
 }
 

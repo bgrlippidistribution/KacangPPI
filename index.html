@@ -9,12 +9,78 @@
 <body>
 <div class="page">
   <header class="topbar">
-    <div class="brand"><h1>SLA ALERT &amp; EXCEPTION CONTROL TOWER</h1><div class="sub">IMPOR KACANG BLI 2026</div></div>
-    <div class="top-control"><label>Periode</label><input id="period" value="Memuat..." /></div>
-    <div class="top-control"><label>Wilayah</label><select id="region"><option value="">Semua</option></select></div>
-    <div class="top-control status-filter"><label>Status Overall SLA</label><select id="overallFilter"><option value="">Semua</option><option>ON TRACK</option><option>AT RISK</option><option>LEWAT SLA</option></select></div>
-    <div class="last-update"><div><small>Terakhir Update</small><b id="lastUpdate">-</b></div><div class="refresh" id="refreshBtn">↻</div></div>
-  </header>
+
+  <div class="header-control period-control">
+    <span class="header-label">Periode</span>
+    <strong class="header-value" id="period">Memuat...</strong>
+  </div>
+
+  <div class="header-control region-control">
+    <label class="header-label" for="region">Wilayah</label>
+
+    <div class="header-select-wrap">
+      <select id="region" aria-label="Pilih wilayah">
+        <option value="">Semua</option>
+      </select>
+
+      <span class="select-chevron" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="header-meta-panel">
+
+    <div class="update-block">
+      <span class="meta-label">Terakhir Update</span>
+      <strong id="lastUpdate">-</strong>
+    </div>
+
+    <span class="meta-divider" aria-hidden="true"></span>
+
+    <div class="interval-block">
+
+      <label class="meta-label" for="refreshInterval">
+        Interval
+      </label>
+
+      <div class="interval-select-wrap">
+
+        <select
+          id="refreshInterval"
+          aria-label="Interval refresh otomatis"
+        >
+          <option value="5">5 Menit</option>
+          <option value="15" selected>15 Menit</option>
+          <option value="30">30 Menit</option>
+          <option value="60">60 Menit</option>
+        </select>
+
+        <span
+          class="interval-chevron"
+          aria-hidden="true"
+        ></span>
+
+      </div>
+
+    </div>
+
+    <span class="meta-divider" aria-hidden="true"></span>
+
+    <button
+      class="refresh"
+      id="refreshBtn"
+      type="button"
+      aria-label="Refresh data"
+      title="Refresh data"
+    >
+      <span
+        class="refresh-icon"
+        aria-hidden="true"
+      ></span>
+    </button>
+
+  </div>
+
+</header>
 
   <section class="summary-wrap">
     <div class="panel summary-left">

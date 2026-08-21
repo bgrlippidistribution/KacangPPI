@@ -661,7 +661,7 @@ select:focus-visible,
 
 .box-title .muted {
     font-weight: 500;
-    font-size: 9px;
+    font-size: 11px;
     margin-left: 5px;
 }
 
@@ -875,7 +875,7 @@ select:focus-visible,
     border-radius: 5px;
     padding: 0 9px;
     background: #fff;
-    font-size: 9px;
+    font-size: 11px;
 }
 
 .filter-grid {
@@ -934,7 +934,7 @@ select:focus-visible,
 }
 
 .selected-item b {
-    font-size: 9px;
+    font-size: 11px;
 }
 
 .overall-badge {

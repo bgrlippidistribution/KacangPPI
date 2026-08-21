@@ -965,7 +965,7 @@ select:focus-visible,
 .journey-legend {
     display: flex;
     gap: 18px;
-    font-size: 8px;
+    font-size: 12px;
     align-items: center;
 }
 
@@ -1022,7 +1022,7 @@ select:focus-visible,
     margin: 0 auto 5px;
     color: white;
     font-weight: 800;
-    font-size: 14px;
+    font-size: 18px;
     background: #8a92a1;
     transition: all 0.2s;
 }
@@ -1104,7 +1104,7 @@ select:focus-visible,
     border-top: 1px solid #e1e5eb;
     margin-top: 8px;
     padding-top: 4px;
-    font-size: 7.5px;
+    font-size: 11px;
     font-weight: 700;
 }
 
@@ -1190,7 +1190,7 @@ select:focus-visible,
 .checkpoint-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 7.2px;
+    font-size: 11px;
     table-layout: fixed;
     flex: 1;
 }
@@ -1371,11 +1371,11 @@ select:focus-visible,
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 6px 14px;
+    gap: 12px 21px;
 }
 
 .legend-footer>strong {
-    font-size: 8px;
+    font-size: 12px;
     color: #1a3a5a;
     margin-right: 4px;
     flex-shrink: 0;

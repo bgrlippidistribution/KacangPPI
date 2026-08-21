@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SLA Alert & Exception Control Tower</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="header-control period-control">
+      <span class="header-label">Periode</span>
+      <strong class="header-value" id="period">Memuat...</strong>
+    </div>
+
+    <div class="header-control region-control">
+      <label class="header-label" for="region">Wilayah</label>
+      <div class="header-select-wrap">
+        <select id="region" aria-label="Pilih wilayah">
+          <option value="">Semua</option>
+        </select>
+        <span class="select-chevron" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="header-meta-panel">
+      <div class="update-block">
+        <span class="meta-label">Terakhir Update</span>
+        <strong id="lastUpdate">-</strong>
+      </div>
+
+      <span class="meta-divider" aria-hidden="true"></span>
+
+      <div class="interval-block">
+        <label class="meta-label" for="refreshInterval">Interval</label>
+        <div class="interval-select-wrap">
+          <select id="refreshInterval" aria-label="Interval refresh otomatis">
+            <option value="5">5 Menit</option>
+            <option value="15" selected>15 Menit</option>
+            <option value="30">30 Menit</option>
+            <option value="60">60 Menit</option>
+          </select>
+          <span class="interval-chevron" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <span class="meta-divider" aria-hidden="true"></span>
+
+      <button class="refresh" id="refreshBtn" type="button" aria-label="Refresh data" title="Refresh data">
+        <span class="refresh-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="summary-wrap">
+    <div class="panel summary-left">
+      <div class="section-title">RINGKASAN STATUS ALERT <span>(SEMUA SHIPMENT)</span></div>
+      <div class="metric-row" id="metrics"></div>
+    </div>
+    <div class="panel summary-mid">
+      <div class="section-title">DISTRIBUSI OVERALL SLA <span>(SEMUA SHIPMENT)</span></div>
+      <div class="donut-area"><div class="donut" id="donut"><div class="donut-center"><strong id="donutTotal">0</strong><span>Total<br/>Container</span></div></div><div class="legend" id="donutLegend"></div></div>
+    </div>
+    <div class="panel summary-right">
+      <div class="section-title">OVERALL SLA <span>(7 HARI)</span></div>
+      <div class="overall-row" id="overallCards"></div>
+      <div class="critical-banner"><span class="metric-icon bg-red">!</span><strong id="criticalCount">0</strong><div><b>CRITICAL EVENT</b><small id="criticalIssue">Tidak ada critical event</small></div></div>
+    </div>
+  </section>
+
+  <section class="workspace">
+    <aside class="rail">
+      <div class="rail-title">CARA PAKAI<br/>(DRILL-DOWN)</div>
+      <div class="rail-step"><div class="step-num step1">1</div><p>Pilih Alert<br/>pada LEVEL 1</p><div class="rail-icon">☝</div></div>
+      <div class="rail-step"><div class="step-num step2">2</div><p>Klik Angka<br/>Tahapan pada<br/>LEVEL 2</p><div class="rail-icon">☷</div></div>
+      <div class="rail-step"><div class="step-num step3">3</div><p>Lihat Detail<br/>Tahapan pada<br/>Popup</p><div class="rail-icon">⌕</div></div>
+    </aside>
+
+    <main class="main-stack">
+      <!-- ========================================================== -->
+      <!-- LEVEL 1 – DAFTAR ALERT AKTIF (DENGAN EXPAND/COLLAPSE)      -->
+      <!-- ========================================================== -->
+      <div class="box alerts" id="alertContainer">
+        <div class="box-title">LEVEL 1 – DAFTAR ALERT AKTIF <span class="muted">(Prioritas Tertinggi di Atas)</span><span class="grow"></span><span class="count">TOTAL ALERT : &nbsp;<b id="totalAlert">0</b></span></div>
+        <div class="table-wrap" id="tableWrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:10%">PRIORITAS</th>
+                <th style="width:10%">B/L NO.</th>
+                <th style="width:10%">CONTAINER</th>
+                <th style="width:12%">TAHAPAN<br/>(SLA TAHAPAN)</th>
+                <th style="width:7%">SLA USED</th>
+                <th style="width:8%">REMAINING /<br/>OVERDUE</th>
+                <th style="width:14%">CURRENT CHECKPOINT<br/>(STUCK AT)</th>
+                <th style="width:8%">PIC</th>
+                <th style="width:9%">CONTROLLER</th>
+                <th style="width:8%">ESCALATION<br/>STATUS</th>
+                <th style="width:8%">OVERALL SLA<br/>(7 HARI)</th>
+                <th style="width:7%">UPDATE</th>
+              </tr>
+            </thead>
+            <tbody id="alertRows"></tbody>
+          </table>
+        </div>
+        <div class="view-all" id="viewAllBtn">
+          Lihat Semua Alert (<span id="viewAllCount">0</span>) 
+          <span class="arrow-icon down" id="arrowIcon">▼</span>
+        </div>
+      </div>
+
+      <div class="selected-bar" id="selectedBar"></div>
+
+      <div class="box journey">
+        <div class="journey-head"><div class="journey-title">LEVEL 2 – 12 SLA TAHAPAN <span style="font-weight:500;font-size:9px">(SHIPMENT JOURNEY) — KLIK ANGKA UNTUK DETAIL</span></div><div class="journey-legend"><span><i class="dot bg-red" style="display:inline-block"></i> Breach</span><span><i class="dot bg-orange" style="display:inline-block"></i> At Risk</span><span><i class="dot bg-amber" style="display:inline-block"></i> Warning</span><span><i class="dot bg-green" style="display:inline-block"></i> On Track</span><span><i class="dot bg-gray" style="display:inline-block"></i> Not Started</span></div></div>
+        <div class="journey-line" id="journey"></div>
+        <div class="journey-foot" id="journeyFoot"></div>
+      </div>
+
+      <!-- ========================================================== -->
+      <!-- LEVEL 3 – DETAIL TAHAPAN & CHECKPOINT                      -->
+      <!-- ========================================================== -->
+      <div class="detail-grid">
+        <!-- KOLOM KIRI: DETAIL TAHAPAN & CHECKPOINT -->
+        <div class="detail-panel">
+          <div class="detail-h">
+            LEVEL 3 – DETAIL TAHAPAN &amp; CHECKPOINT
+            <span class="stage-chip" id="detailChip">TAHAPAN</span>
+            <span style="margin-left:12px;font-size:8px" id="detailSla"></span>
+          </div>
+          <div class="detail-stats" id="detailStats"></div>
+          <table class="checkpoint-table">
+            <thead>
+              <tr>
+                <th style="width:8%">CHECKPOINT</th>
+                <th style="width:22%">NAMA CHECKPOINT</th>
+                <th style="width:10%">STATUS</th>
+                <th style="width:12%">START TIME</th>
+                <th style="width:10%">ELAPSED</th>
+                <th style="width:10%">SLA JAM</th>
+                <th style="width:10%">SLA USED</th>
+                <th style="width:10%">REMAINING</th>
+                <th style="width:8%">PIC</th>
+              </tr>
+            </thead>
+            <tbody id="checkpointRows"></tbody>
+          </table>
+        </div>
+
+        <!-- KOLOM TENGAH: ACTION + ESCALATION FLOW -->
+        <div style="display:grid;grid-template-rows:1fr 1.15fr;gap:8px">
+          <div class="detail-panel action-card">
+            <div class="mini-title">CURRENT ACTION <span style="font-weight:500">(SAAT INI)</span></div>
+            <ul id="currentAction"></ul>
+          </div>
+          <div class="detail-panel flow-card">
+            <div class="mini-title">ESCALATION FLOW <span style="font-weight:500">(SAMPLE REJECT)</span></div>
+            <div class="flow-list" id="flowList"></div>
+          </div>
+        </div>
+
+        <!-- KOLOM KANAN: TIMELINE ESCALATION -->
+        <div class="detail-panel timeline-card">
+          <div class="mini-title">TIMELINE ESCALATION</div>
+          <div id="timeline"></div>
+        </div>
+      </div>
+
+    </main>
+
+    <aside class="box filters">
+      <div class="box-title">▽ &nbsp; FILTER CEPAT</div>
+      <div class="filter-body">
+        <label>Cari B/L / Container</label>
+        <input id="search" placeholder="Masukkan B/L atau Container" />
+        <div class="filter-grid">
+          <div><label>Pilih Tahapan</label><select id="stageFilter"><option value="">Semua Tahapan</option></select></div>
+          <div><label>Prioritas Alert</label><select id="priorityFilter"><option value="">Semua Prioritas</option><option>CRITICAL EVENT</option><option>SLA BREACH</option><option>AT RISK</option><option>WARNING</option><option>ON TRACK</option></select></div>
+          <div><label>Wilayah</label><select id="region2"><option value="">Semua Wilayah</option></select></div>
+          <div><label>Escalation Status</label><select id="escalationFilter"><option value="">Semua Status</option><option>OPEN</option><option>NONE</option><option>CLOSED</option></select></div>
+        </div>
+        <button class="filter-apply" id="applyFilter">Terapkan Filter</button>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- FOOTER / LEGEND                                            -->
+  <!-- ========================================================== -->
+  <footer class="legend-footer">
+    <strong>KETERANGAN PRIORITAS</strong>
+    <div class="legend-f-item">
+      <span class="metric-icon bg-red">!</span>
+      <span>Critical Event<br/>(Isu Sangat Kritis)</span>
+    </div>
+    <div class="legend-f-item">
+      <span class="metric-icon bg-red">!</span>
+      <span>SLA Breach<br/>(&gt;100% SLA Tahapan)</span>
+    </div>
+    <div class="legend-f-item">
+      <span class="metric-icon bg-orange">!</span>
+      <span>At Risk<br/>(85% - 100% SLA)</span>
+    </div>
+    <div class="legend-f-item">
+      <span class="metric-icon bg-amber">!</span>
+      <span>Warning<br/>(70% - &lt;85% SLA)</span>
+    </div>
+    <div class="legend-f-item">
+      <span class="metric-icon bg-green">✓</span>
+      <span>On Track<br/>(&lt;70% SLA)</span>
+    </div>
+    <div class="legend-f-item">
+      <span class="metric-icon bg-gray">✓</span>
+      <span>Completed<br/>(Selesai)</span>
+    </div>
+    <div class="footnote">
+      SLA dihitung berdasarkan waktu kerja (Jam) sesuai standar proses masing-masing checkpoint.
+    </div>
+  </footer>
+</div>
+
+<!-- Popup Detail Tahapan -->
+<div class="stage-detail-popup" id="stageDetailPopup">
+  <div class="stage-detail-content">
+    <button class="close-btn" id="closeStageDetailBtn" type="button">&times;</button>
+    <h2 id="popupTitle">Detail Tahapan</h2>
+    <div id="popupContent"></div>
+  </div>
+</div>
+
+<div class="loading" id="loading"><div>Memuat data spreadsheet…</div></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
